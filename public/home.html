@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <meta name="keywords" content="大白兔,vue,java,博客,前端,后端,blog">
+    <meta name="description" content="大白兔(DBrabbit)，java程序员，分享个人经历，探讨框架技术">
+    <meta name="author" content="大白兔">
+    <meta name="renderer" content="webkit">
+    <meta name="referrer" content="no-referrer">
+
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/10.1.2/styles/a11y-light.min.css" rel="stylesheet">
+    <style>
+        html {
+
+            height: 100%;
+        }
+        
+        .loader {
+            height: 40px;
+            width: 40px;
+            position: absolute;
+            left: 50%;
+            margin-left: -20px;
+            top: 50%;
+            margin-top: -20px;
+        }
+        
+        .loader:before,
+        .loader:after {
+            content: "";
+            height: 40px;
+            width: 40px;
+            border: 8px solid rgba(255, 255, 255, .5);
+            border-radius: 10px;
+            position: absolute;
+            top: 0;
+        }
+        
+        .loader:before {
+            animation: animate 2s infinite linear;
+            border: 8px solid rgba(0, 225, 222, .5);
+        }
+        
+        .loader:after {
+            animation: animate2 2s infinite linear;
+            border: 8px solid rgba(249, 212, 35, .5)
+        }
+        
+        @keyframes animate {
+            100% {
+                transform: rotate(180deg) skew(360deg);
+            }
+        }
+        
+        @keyframes animate2 {
+            100% {
+                transform: rotate(-180deg) skew(-360deg);
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app">
+        <div class='loader'></div>
+    </div>
+    <script src="https://unpkg.com/qrcodejs2@0.0.2/qrcode.js"></script>
+    <!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=4.0&ak=mHGeNrAuzZscixVMAjfaq1PPgKPOnoPm"></script> -->
+    <!-- <script type="text/javascript" src="https://3gimg.qq.com/lightmap/components/geolocation/geolocation.min.js "></script> -->
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "https://hm.baidu.com/hm.js?68f23509711f01e6938f3f4dc081c230";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+    <script type="text/javascript" src="https://apis.map.qq.com/tools/geolocation/min?key=MAVBZ-RQXRF-D5YJV-J46RA-VTMFS-LFFF5&referer=myapp"></script>
+</body>
+
+</html>
