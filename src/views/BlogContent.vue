@@ -59,6 +59,18 @@
         </el-divider>
       </el-col>
 
+      <el-col>
+        <router-link :to="'/blog/' + preAndNextBlog.preBlogId" >
+          <span>》下一篇文章</span>
+          <span>{{preAndNextBlog.preTitle}}</span>
+        </router-link>
+      </el-col>
+      <el-col>
+        <router-link :to="'/blog/' + preAndNextBlog.nextBlogId" >
+          <span>》上一篇文章</span>
+          <span>{{preAndNextBlog.nextTitle}}</span>
+        </router-link>
+      </el-col>
 
       <el-col v-if="messageShow" :span="22" :offset="1" class="blog-mess">
         <new-comment @submit="submit" class="blog-animation"></new-comment>
@@ -119,7 +131,8 @@ export default {
       load: false,
       click: false,
       clipboard: '',
-      messageShow: true
+      messageShow: true,
+      preAndNextBlog:''
     };
   },
   components: {
@@ -270,6 +283,22 @@ export default {
         this.getMessList();
       }
     },
+    // 获取上一篇文章和下一篇文章
+    getPreAndNextBlog() {
+
+      let that = this;
+      let id = that.$route.params.id;
+      axios({
+        method:'get',
+        url:"/apis/blog/preAndNextBlog",
+        params:{
+          blog_id:id
+        }
+      }).then(res => {
+
+        that.preAndNextBlog = res.data.data;
+      })
+    }
   },
   mounted() {
     let that = this
@@ -306,6 +335,7 @@ export default {
   },
   created() {
     this.getArticle();
+    this.getPreAndNextBlog();
   },
   watch: {
     '$route'(to, from) {
@@ -316,6 +346,7 @@ export default {
         this.current_page = 1;
         this.getArticle();
         this.getMessList();
+        this.getPreAndNextBlog();
       }
     }
   }
