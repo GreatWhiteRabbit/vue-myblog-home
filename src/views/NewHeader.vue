@@ -171,11 +171,16 @@ export default {
           sessionStorage.removeItem("SimpleUserName");
             this.$store.dispatch("logOut");
             this.$router.push("/login");
-            this.$message({
+            this.$notify({
+              type:'success',
+              title:'退出操作',
+              message:'退出登录成功'
+            })
+           /* this.$message({
                 showClose: true,
                 message: '退出成功',
                 type: 'success'
-            });
+            });*/
 },
     handleScroll () {
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;

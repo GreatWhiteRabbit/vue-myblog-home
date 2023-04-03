@@ -147,7 +147,7 @@ export default {
       this.search = this.searchList[index];
       this.searchBtn();
     },
-    // 通过搜索使用elasticsearch检索功能
+    // 通过搜索使用elasticsearch检索功能,由于服务器性能，暂不支持elasticsearch
     searchInfo() {
       if (this.search !== '') {
         axios({

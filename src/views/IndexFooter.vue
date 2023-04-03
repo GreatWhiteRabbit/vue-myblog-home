@@ -1,6 +1,19 @@
 <template>
 
     <footer class="footer" v-show="route!='/blog'">
+        <div style="margin-left: 5%">
+          <span @click="btn" style="color: #88dcea;font-size: 20px">提交建议</span>
+          <el-form v-show="suggestion">
+            <el-row>
+              <el-input type="textarea" v-model="info" placeholder="提交建议或者告知网站出现的问题">
+              </el-input>
+            </el-row>
+            <el-row>
+              <el-button type="primary" @click="submitSuggest">提交</el-button>
+              <el-button @click="cancel">取消</el-button>
+            </el-row>
+          </el-form>
+        </div>
         <div class="container">
             <div class="foot-row service">
                 <p class="title">DBrabbit•记录个人经历，分享技术</p>
@@ -17,7 +30,9 @@
                     </ul>
             </div>
             <div class="foot-row provide">
-
+              <span>
+                <a href="https://beian.miit.gov.cn/" target="_blank">湘ICP备2023006499号-1</a>
+              </span>
 
             </div>
             <div class="foot-row publicity">
@@ -33,6 +48,8 @@
     
 </template>
 <script>
+import axios from "axios";
+
 export default {
     name:'IndexFooter',
     props:{
@@ -40,9 +57,34 @@ export default {
     },
     data(){
         return{
-            year:2020,
+            year:2023,
+            suggestion:false,
+            info:""
         }
     },
+  methods:{
+      btn() {
+        this.suggestion = true;
+      },
+    submitSuggest() {
+        if(this.info === "") return;
+        axios({
+          method:'post',
+          url:'/apis/suggestion/submit/' + this.info
+        }).then(res => {
+          this.$notify({
+            type:"success",
+            message:'提交成功，感谢您对本网站的支持',
+            title:'网站提示'
+          })
+          //this.$message.success("提交成功，感谢您对本网站的支持");
+          this.suggestion = false;
+        })
+    },
+    cancel() {
+        this.suggestion = false;
+    }
+  },
    created(){
        let date=new Date();
        this.year=date.getFullYear()

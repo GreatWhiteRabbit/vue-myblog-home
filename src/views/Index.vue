@@ -35,8 +35,13 @@
             &#xe623;
         </span>
     </div>
-    
 
+   <div class="framing" style="background-color: #dcfcfc">
+     <div class="container">
+       <h1 class="title" id="next">更新日志</h1>
+       <update-log-list :list="updateList"></update-log-list>
+     </div>
+   </div>
 
   <div class="framing a-tag" >
         <div class="container">
@@ -122,10 +127,12 @@
 <script>
 import scrollReveal from 'scrollreveal';
 import axios from "axios";
+import UpdateLogList from "@/views/UpdateLogList";
 
 export default {
     name:'Index',
-    data(){
+  components: {UpdateLogList},
+  data(){
         return {
             list:[
                 {
@@ -142,6 +149,8 @@ export default {
             seconds:"0",
             scrollReveal:scrollReveal(),
             welcome:'H,e,l,l,o,!&nbsp;&nbsp;,W,e,l,c,o,m,e&nbsp;&nbsp;,t,o&nbsp;&nbsp;,b,l,o,g.',
+            updateList:[],
+
         }
     },
     computed:{
@@ -166,7 +175,6 @@ export default {
         },
          getShow(){
             let that=this
-
             that.$get('/apis/home/get')
             .then(function (response) {
 
@@ -182,11 +190,25 @@ export default {
             method:'get',
             url:'/apis/browse/user'
           })
-        }
+        },
+      // 获取更新日志
+      getUpdateLog() {
+          axios({
+            method:"get",
+            url:"/apis/updateLog/getAll",
+            params:{
+              page:1,
+              size:10
+            }
+          }).then(res => {
+            this.updateList = res.data.data.updateLogList;
+          })
+      }
 
     },
     mounted() {
-        this.getShow()
+        this.getShow();
+        this.getUpdateLog();
             setTimeout(
                 ()=>{
                     console.log(this.scrollReveal)
@@ -295,6 +317,7 @@ export default {
   },
   created() {
       this.sendMessage();
+
   }
 
 }

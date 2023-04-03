@@ -96,14 +96,24 @@ export default {
       })
           .then(function (res) {
             if(res.data.success === false) {
-              this.$message.error("发布失败，请重新发布");
+              this.$notify({
+                title:'留言提示',
+                type:'error',
+                message:'发布失败，请重新发布'
+              })
+              //this.$message.error("发布失败，请重新发布");
             } else {
               that.$emit("submit");
-              that.$message({
+              this.$notify({
+                title:'留言提示',
+                type:'success',
+                message:'发布成功'
+              })
+              /*that.$message({
                 showClose: true,
                 message: "发布成功",
                 type: 'success'
-              });
+              });*/
             }
           })
           .catch(function (error) {

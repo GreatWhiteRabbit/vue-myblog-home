@@ -78,7 +78,6 @@ export default {
   },
   methods: {
     login(formName) {
-      console.log(this.formCustom.email);
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let that = this;
@@ -94,14 +93,24 @@ export default {
             })
               .then(res => {
                 if(res.data.success === false) {
-                  this.$message.error("用户不存在，请先注册");
+                  this.$notify({
+                    type:'error',
+                    title:'登录提示',
+                    message:'用户不存在，请先注册'
+                  })
+                //  this.$message.error("用户不存在，请先注册");
                 } else {
                   that.$router.push("/blog");
-                  that.$message({
+                  this.$notify({
+                    type:'success',
+                    message:'登录成功',
+                    title:"登录提示"
+                  })
+                 /* that.$message({
                     showClose: true,
                     message: "登录成功",
                     type: "success",
-                  });
+                  });*/
                   var user_name = res.data.data.user_name;
                   var user_id = res.data.data.user_id;
                   sessionStorage.setItem("SimpleUser_id",user_id);
@@ -151,11 +160,16 @@ export default {
         this.$store.dispatch("setToken", this.$route.query.token);
         this.$store.dispatch("userInfo");
         this.$router.push("/blog");
-        this.$message({
+        this.$notify({
+          message:'登录成功',
+          type:'success',
+          title:'登录提示'
+        })
+      /*  this.$message({
                 showClose: true,
                 message: "登录成功",
                 type: "success",
-        });
+        });*/
     }
   },
   mounted() {

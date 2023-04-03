@@ -74,11 +74,11 @@ instance.interceptors.response.use(function(response) {
                 });
                 break;
             case 404:
-                Notification.warning({
-                    title: '访问路径不正确',
-                    message: error.response.data.message,
-                    iconClass: 'el-icon-warning-outline'
-                });
+                // Notification.warning({
+                //     title: '访问路径不正确',
+                //     message: error.response.data.message,
+                //     iconClass: 'el-icon-warning-outline'
+                // });
                 break;
             case 422:
                 Notification.warning({

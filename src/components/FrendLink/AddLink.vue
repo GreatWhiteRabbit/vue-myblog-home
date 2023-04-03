@@ -53,7 +53,7 @@
                     <!-- <el-collapse-transition> -->
                         <transition name="down">
                         <div class="link-group a-tag" v-show="linkAdd">
-                            <a href="javascrip:;" class="link-title" >功能已停用:请在留言区,按上表单格式添加</a>
+                            <a href="javascrip:;" class="link-title" >请正确填写网站相关信息，否则不能审核通过</a>
                              <el-tooltip class="item" effect="light" content="请在留言区留下友链信息" placement="top">
                                 <el-button @click="submit('FormData')" class="link-btn">添加友链</el-button>
                              </el-tooltip>
@@ -105,10 +105,20 @@ export default {
                     this.$post('/apis/link',this.FormData)
                     .then(function(res){
 
-                        if(res.success === true) {
-                          that.$message.success("申请成功，等待管理员审核");
+                        if(res.data.success === true) {
+                          this.$notify({
+                            type:'success',
+                            title:'友链提示',
+                            message:'提交成功，等待管理员审核'
+                          })
+                         // that.$message.success("申请成功，等待管理员审核");
                         } else {
-                          that.$message.error("服务器异常");
+                          this.$notify({
+                            title:'网站提示',
+                            message:'提交失败，请重试',
+                            type:'error'
+                          })
+                          //that.$message.error("服务器异常");
                         }
                     })
 

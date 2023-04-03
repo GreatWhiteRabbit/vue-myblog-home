@@ -49,7 +49,6 @@ export default {
 
     // 标签点击查询跳转
     change(item){
-
       this.current_page=1
       this.$router.push({
           path: '/blog',
@@ -147,7 +146,7 @@ export default {
       },
     // 获取首页固定
     getHomeShow() {
-      console.log("150 + newhome");
+
       axios({
         method:'get',
         url:'/apis/blog/home',
@@ -156,7 +155,7 @@ export default {
           size:10
         }
       }).then(res => {
-        console.log(res + "159 + new home");
+
         this.list = res.data.data.blogVoList;
         this.last_page = Math.ceil(res.data.data.total / 10);
         this.loading = false;

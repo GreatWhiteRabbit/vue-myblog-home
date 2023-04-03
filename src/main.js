@@ -80,6 +80,7 @@ Vue.directive('highlight', function(el) {
         hljs.highlightBlock(block)
     })
 })
+
 Vue.prototype.$get = http.get;
 Vue.prototype.$post = http.post;
 Vue.prototype.$axios = axios;
@@ -95,6 +96,8 @@ http.defaults.baseURL = process.env.VUE_APP_URL;
 //     s.parentNode.insertBefore(hm, s);
 // })();
 
+import vueSeamless from 'vue-seamless-scroll'
+Vue.use(vueSeamless)
 Vue.config.productionTip = false
     // 简单配置
 NProgress.inc(0.2)

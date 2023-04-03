@@ -85,10 +85,27 @@ export default {
                   this.current_page++
                   this.getMessList()
               } 
+          },
+      // 获取发送留言的提示
+      getMessageInfo() {
+          let type = sessionStorage.getItem("MessageType");
+          let title = sessionStorage.getItem("MessageTitle");
+          let message = sessionStorage.getItem("Message");
+        sessionStorage.removeItem("MessageType");
+        sessionStorage.removeItem("MessageTitle");
+        sessionStorage.removeItem("Message");
+          if(type !== null) {
+            this.$notify({
+              type:type,
+              title:title,
+              message:message
+            });
           }
+      }
     },  
     created() {
-       this.getMess()
+       this.getMess();
+       this.getMessageInfo();
     },
 }
 </script>

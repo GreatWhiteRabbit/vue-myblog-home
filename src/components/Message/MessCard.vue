@@ -382,9 +382,19 @@ export default {
           }
         }).then(res => {
           if(res.data.data === "false") {
-            this.$message.error("不能评论已被删除的留言");
+            this.$notify({
+              type:'error',
+              title:'回复提示',
+              message:'不能评论已被删除的留言'
+            })
+           // this.$message.error("不能评论已被删除的留言");
           } else {
-            this.$message.success("评论成功");
+            this.$notify({
+              type:'success',
+              title:'回复提示',
+              message:'评论成功'
+            })
+           // this.$message.success("评论成功");
           }
         })
 
@@ -413,13 +423,23 @@ export default {
         }).then(function (res) {
           if (res.data.success === true) {
             that.$emit("submit");
-            that.$message({
+            this.$notify({
+              type:'success',
+              title:'留言提示',
+              message:'删除成功'
+            })
+          /*  that.$message({
               showClose: true,
               message: "删除成功",
               type: "success",
-            });
+            });*/
           } else {
-            this.$message.error("删除失败");
+            this.$notify({
+              type:'error',
+              title:'留言提示',
+              message:'删除失败'
+            })
+            //this.$message.error("删除失败");
           }
         })
             .catch(function (error) {
@@ -446,13 +466,23 @@ export default {
           console.log(res.data);
           if (res.data.success === true) {
             that.$emit("submit");
-            that.$message({
+            this.$notify({
+              type:'success',
+              title:'留言提示',
+              message:'删除成功'
+            })
+          /*  that.$message({
               showClose: true,
               message: "删除成功",
               type: "success",
-            });
+            });*/
           } else {
-            this.$message.error("删除失败");
+            this.$notify({
+              type:'error',
+              title:'留言提示',
+              message:'删除失败'
+            })
+          //  this.$message.error("删除失败");
           }
         })
             .catch(function (error) {

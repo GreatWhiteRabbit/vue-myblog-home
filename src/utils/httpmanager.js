@@ -66,10 +66,10 @@ instance.interceptors.response.use(function(response) {
             });
             break;
         case 404:
-            Notification.warning({
-                title: '访问路径不正确',
-                message: error.response.data.message,
-            });
+            // Notification.warning({
+            //     title: '访问路径不正确',
+            //     message: error.response.data.message,
+            // });
             break;
         case 422:
             Notification.warning({

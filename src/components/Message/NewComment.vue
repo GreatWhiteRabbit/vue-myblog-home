@@ -224,15 +224,24 @@ export default {
         this.count++;
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            if(this.isToken === null) {
-              this.$message.error("未登录，不能留言");
+            if(!this.isLogin) {
+              sessionStorage.setItem("MessageType","error");
+              sessionStorage.setItem("MessageTitle","错误提示");
+              sessionStorage.setItem("Message","未登录，请验证邮箱后留言");
+              //this.$message.error("未登录，不能留言");
             } else {
               if(this.countCount === 0) {
-                this.$message.error("请输入内容");
-              } else if(this.countCount > 100) {
-                this.$message.error("内容超出限制了！");
-              } else {
+                sessionStorage.setItem("MessageType","error");
+                sessionStorage.setItem("MessageTitle","错误提示");
+                sessionStorage.setItem("Message","请输入内容");
 
+                //this.$message.error("请输入内容");
+              } else if(this.countCount > 100) {
+                sessionStorage.setItem("MessageType","error");
+                sessionStorage.setItem("MessageTitle","错误提示");
+                sessionStorage.setItem("Message","内容超出限制了！！");
+               // this.$message.error("内容超出限制了！");
+              } else {
                 this.comment.userId = this.isToken;
                 this.comment.userName = this.user_name;
                 this.$emit("submit", this.comment);
@@ -241,7 +250,8 @@ export default {
             }
           }
         });
-      } else {
+      }
+      else {
         console.log("不执行此操作")
       }
     },

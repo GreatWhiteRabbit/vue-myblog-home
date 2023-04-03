@@ -194,7 +194,12 @@ export default {
               that.click = true;
               that.content.blog_likes += 1;
             } else {
-              this.$message.error("服务器异常");
+              this.$notify({
+                type:'warning',
+                title:'网络提示',
+                message:'网络异常'
+              })
+              //this.$message.error("服务器异常");
             }
           })
           .catch(function (error) {
@@ -244,14 +249,24 @@ export default {
         }
       }).then(function (res) {
         if(res.data.success === false) {
-          this.$message.error("留言发布失败，请重新发送");
+          this.$notify({
+            type:'error',
+            title:'留言提示',
+            message:"留言发布失败，请重新发送"
+          })
+         // this.$message.error("留言发布失败，请重新发送");
         } else {
           that.getMess();
-          that.$message({
+          this.$notify({
+            title:'留言提示',
+            message:"评论成功",
+            type:'success'
+          })
+          /*that.$message({
             showClose: true,
             message: "评论成功",
             type: "success",
-          });
+          });*/
         }
       })
           .catch(function (error) {
@@ -298,17 +313,38 @@ export default {
 
         that.preAndNextBlog = res.data.data;
       })
+    },
+    // 获取发送留言的提示
+    getMessageInfo() {
+      let type = sessionStorage.getItem("MessageType");
+      let title = sessionStorage.getItem("MessageTitle");
+      let message = sessionStorage.getItem("Message");
+      sessionStorage.removeItem("MessageType");
+      sessionStorage.removeItem("MessageTitle");
+      sessionStorage.removeItem("Message");
+      if(type !== null) {
+        this.$notify({
+          type:type,
+          title:title,
+          message:message
+        });
+      }
     }
   },
   mounted() {
     let that = this
     this.clipboard = new ClipboardJS('.copy-code', {
       target: function (trigger) {
-        that.$message({
-          showClose: true,
-          message: '复制成功',
-          type: "success",
-        });
+        this.$notify({
+          type:"success",
+          title:'博客提示',
+          message:'复制成功'
+        })
+        // that.$message({
+        //   showClose: true,
+        //   message: '复制成功',
+        //   type: "success",
+        // });
         trigger.innerText = '已复制'
         setTimeout(() => {
           trigger.innerText = '复制代码'
@@ -336,6 +372,7 @@ export default {
   created() {
     this.getArticle();
     this.getPreAndNextBlog();
+    this.getMessageInfo();
   },
   watch: {
     '$route'(to, from) {

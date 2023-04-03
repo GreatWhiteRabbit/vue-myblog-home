@@ -111,7 +111,12 @@ export default {
     sendVerificationCode() {
       var length = this.formCustom.email.indexOf("@");
       if(length === -1 || length === 0) {
-        this.$message.error("请输入邮箱");
+        this.$notify({
+          type:'error',
+          title:'输入提示',
+          message:'请输入邮箱'
+        })
+        //this.$message.error("请输入邮箱");
         return;
       }
       let TIME_COUNT = 180;
@@ -132,7 +137,6 @@ export default {
     },
     //通过用户输入的邮箱发送到指定的邮箱中取
     getCode() {
-
      axios({
       method:'get',
        url:'/apis/users/sendEmail',
@@ -142,20 +146,35 @@ export default {
      }).then((res) => {
        if(res.data.data === null) {
          this.canLogin = true;
-       } else {
+       } else if (res.data.data !== "false") {
          this.canLogin = false;
-         this.$message.error("邮箱所属账户已存在，登录成功");
+         this.$notify({
+           title:'警告',
+           type:"warning",
+           message:"邮箱所属账户已存在，直接登录成功"
+         })
+        // this.$message.error("邮箱所属账户已存在，登录成功");
          var user_name = res.data.data.user_name;
          var user_id = res.data.data.user_id;
          sessionStorage.setItem("SimpleUser_id",user_id);
          sessionStorage.setItem("SimpleUserName",user_name);
         this.$router.push("/blog");
+       } else {
+         this.$notify.error({
+           title:'网站提示',
+           message:"您获取验证码操作过于频繁，请稍后再试"
+         })
+        // this.$message.error("您获取验证码操作过于频繁，请稍后再试");
        }
       });
     },
     login(formName) {
       if(this.canLogin === false) {
-        this.$message.error("请先获取验证码");
+        this.$notify.error({
+          title:"验证码未获取",
+          message:"请先获取验证码"
+        })
+        //this.$message.error("请先获取验证码");
         return;
       }
       this.$refs[formName].validate((valid) => {
@@ -178,10 +197,20 @@ export default {
                   var user_id = res.data.data.user_id;
                   sessionStorage.setItem("SimpleUser_id",user_id);
                   sessionStorage.setItem("SimpleUserName",user_name);
-                  this.$message.success("注册成功，欢迎留言");
+                  this.$notify({
+                    type:'success',
+                    message:"注册成功，欢迎留言",
+                    title:'注册成功'
+                  })
+                  //this.$message.success("注册成功，欢迎留言");
                   this.$router.push("/blog");
                 } else {
-                  this.$message.error("验证码错误或邮箱错误");
+                  this.$notify({
+                    type:'error',
+                    title:'错误提示',
+                    message:"验证码错误或邮箱错误"
+                  })
+                  //this.$message.error("验证码错误或邮箱错误");
                 }
                 that.loading = false;
 
